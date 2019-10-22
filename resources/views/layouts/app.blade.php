@@ -19,20 +19,26 @@
     <link href="{{mix('/app-assets/css/app.css')}}" rel="stylesheet">  
     <style>
         .main-card{
-            margin: 0 7em;
+            margin: 0 1em;
         }
     </style>  
 </head>
-<body class="vertical-layout vertical-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns">
+<body class="horizontal-layout 2-columns pace-done horizontal-menu menu-collapsed" data-open="click" data-menu="horizontal-menu" data-col="2-columns">
 
     <div id="app">
        <!-- BEGIN: Header-->
     @include('partials.header')
     <!-- END: Header-->
-
-        <main class="py-3">
-            @yield('content')
-        </main>
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-header row mb-1">
+            </div>
+            <div style="padding-bottom: 3rem!important;" class="content-body">
+                @yield('content')
+               
+        </div>
+    </div>
+        
     </div>
     <script src="{{mix('/app-assets/js/all.min.js')}}"></script>
     @stack('scripts')

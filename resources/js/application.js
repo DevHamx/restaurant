@@ -20,10 +20,15 @@ $(function() {
     track:true  
     }),
     $( "#notification" ).tooltip({  
-    items: "li",    
+    items: "a",    
     content: "<strong>Notifications</strong>",  
     track:true  
     }),
+    $( "#messages" ).tooltip({  
+        items: "a",    
+        content: "<strong>Messages</strong>",  
+        track:true  
+        }),
     $( "#expand" ).tooltip({  
     items: "li",    
     content: "<strong>Etendre / Rétrécir</strong>",  

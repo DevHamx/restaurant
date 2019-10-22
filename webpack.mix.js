@@ -28,6 +28,7 @@ mix.scripts([
 .scripts([
    'resources/js/vendors-test.min.js',
    'resources/js/datatables.min.js',
+   'resources/js/jquery.sticky.js',
    'resources/js/application-menu.js',
    'resources/js/application.js',
    'resources/js/jsvalidation.min.js',
