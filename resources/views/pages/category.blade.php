@@ -4,7 +4,14 @@ $_SESSION["icon"]='la la-th-list';
 ?>
 @extends('layouts.app')
 @section('content')
-@include('partials.menu')
+@component('partials.menu')
+    @slot('class')
+        la la-th-list
+    @endslot
+    @slot('title')
+        Catégories des Restaurants
+    @endslot
+@endcomponent
 @include('partials.messages')
 <section id="horizontal-form-layouts">
     <div class="row">

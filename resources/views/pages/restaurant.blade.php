@@ -1,10 +1,13 @@
-<?php
-$_SESSION["name"]='Restaurants';
-$_SESSION["icon"]='la la-cutlery';
-?>
 @extends('layouts.app')
 @section('content')
-@include('partials.menu')
+@component('partials.menu')
+    @slot('class')
+        la la-cutlery
+    @endslot
+    @slot('title')
+        Restaurants
+    @endslot
+@endcomponent
 @include('partials.messages')
 <link rel="stylesheet" type="text/css" href="{{mix('/app-assets/css/select2/select2.min.css')}}">
 <section id="horizontal-form-layouts">
