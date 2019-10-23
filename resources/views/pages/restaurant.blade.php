@@ -70,8 +70,8 @@
                                                 <fieldset>
                                                 <p class="text-left"><h6 class="text-muted">Categories</h6></p>
                                                 <div class="row"style="display:flex;align-items:center;">
-                                                <div class="col-md-12">
-                                                        {{ Form::select('categories[]',$categories,null,['class'=>'select2 form-control select2-hidden-accessible','multiple'=>'multiple','tabindex'=>'-1', 'aria-hidden'=>'true']) }}
+                                                <div id="divCategories" class="col-md-12">
+                                                        {{ Form::select('categories[]',$categories,null,['id'=>'categories','class'=>'select2 form-control select2-hidden-accessible','multiple'=>'multiple','tabindex'=>'-1', 'aria-hidden'=>'true']) }}
 
                                                 </div>
                                             </div>
@@ -203,14 +203,18 @@ $.ajax({
         type: "GET",
         dataType: "json",
         success:function(data) { 
-        $('select[name="categories[]"]').empty();
+        //$('select[name="categories[]"]').empty();
         $.each(data, function(key, value) {
+            $('select#categories option[value="'+key+'"]').remove();
             $('select[name="categories[]"]').append('<option selected value="'+ key +'">'+ value +'</option>');
+            //$('option[value="'+key+'"]').attr('selected','selected');
         });
         }
     });
 }
-else{$('select[name="categories[]"]').empty();}
+else{
+    $( "div#divCategories" ).find(".select2-selection__rendered .select2-selection__choice").remove();
+    $('select#categories option').removeAttr("selected");}
 
 });
 $("#reset").click(function() {

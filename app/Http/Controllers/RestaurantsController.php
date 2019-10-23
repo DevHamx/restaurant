@@ -42,7 +42,7 @@ class RestaurantsController extends Controller
     
             case 'Modifier':
                 $this->validate($request,[
-                    'id' => ['required','exists:categories'],
+                    'id' => ['required','exists:restaurants'],
                 ]);
             $restaurant = Restaurant::where('id',$request->input('id'))->first();
             $this->validate($request,[
@@ -55,7 +55,7 @@ class RestaurantsController extends Controller
     
             case 'Supprimer':
             $this->validate($request,[
-                'id' => ['required','exists:categories'],
+                'id' => ['required','exists:restaurants'],
             ]);  
             $restaurant = Restaurant::where('id',$request->input('id'))->first();
             $restaurant->categories()->detach();
