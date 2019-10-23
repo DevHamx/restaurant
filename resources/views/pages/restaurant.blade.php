@@ -77,11 +77,148 @@ $_SESSION["icon"]='la la-cutlery';
                                             </div>
                                         </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    
+                                    <div class="form-group row mx-auto">
+                                        <div class="col-md-12">
+                                            <fieldset>
+                                                <p class="text-left"><h6 class="text-muted">Numéro de téléphone</h6></p>
+                                                <div class="row"style="display:flex;align-items:center;">
+                                                    <div class="col-md-12">
+                                                        {{Form::text('phone', '',['class'=>'form-control' ,'placeholder'=>'Numéro de téléphone','autofocus'])}}
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group row mx-auto">
+                                        <div class="col-md-12">
+                                            <fieldset>
+                                                <p class="text-left"><h6 class="text-muted">Périods</h6></p>
+
+                                                    <div class="row"style="display:flex;align-items:center;">
+                                                        <div class="col-md-12">
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Day</th>
+      <th scope="col">Open Hour</th>
+      <th scope="col">Close Hour</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lundi</td>
+      <td>{{Form::text('periods[0][0]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[0][1]', '',['class'=>'form-control'])}}</td>
+    </tr>
+    <tr>
+      <td>Mardi</td>
+      <td>{{Form::text('periods[1][0]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[1][1]', '',['class'=>'form-control'])}}</td>
+    </tr>
+    <tr>
+      <td>Mercredi</td>
+      <td>{{Form::text('periods[2][0]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[2][1]', '',['class'=>'form-control'])}}</td>
+    </tr>
+    <tr>
+      <td>Jeudi</td>
+      <td>{{Form::text('periods[3][0]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[3][1]', '',['class'=>'form-control'])}}</td>
+    </tr>
+    <tr>
+      <td>Vendredi</td>
+      <td>{{Form::text('periods[4][0]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[4][1]', '',['class'=>'form-control'])}}</td>
+    </tr>
+    <tr>
+      <td>Samedi</td>
+      <td>{{Form::text('periods[5][0]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[5][1]', '',['class'=>'form-control'])}}</td>
+    </tr>
+    <tr>
+      <td>Dimanche</td>
+      <td>{{Form::text('periods[6][0]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[6][1]', '',['class'=>'form-control'])}}</td>
+    </tr>
+  </tbody>
+</table>
+
+                                                        </div>
+                                                </div>
+
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+
+<div class="col-md-12">
+    
+    <div class="form-group row mx-auto">
+        <div class="col-md-12">
+            <fieldset>
+                <p class="text-left"><h6 class="text-muted">Menu</h6></p>
+
+                    <div class="row"style="display:flex;align-items:center;">
+                        <div class="col-md-12">
+                            
+<table class="table table-condensed table-hover">
+            <thead>
+                <tr class="row">
+                    <th class="col-md-10">Elément</th>
+                    <th class="col-md-2">Prix</th>
+                </tr>
+            </thead>
+            <tbody id="rest_menu">
+                <tr class="row">
+                    <td class="col-md-10"><input type="text" class="form-control" name="m_item[]" /></td>
+                    <td class="col-md-2">
+                    <input type="text" class="form-control" name="m_price[]" />
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="row">
+                    <td class="col-md-12" colspan="2" style="text-align: right;">
+                        <button id="add_menu_item" class="btn btn-success btn-sm">Ajouter element</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+                        </div>
+                    </div>
+
+            </fieldset>
+        </div>
+
+    </div>
+
+
+</div>
+
+                            </div>
                             <div style="display: block"  class="row">
                                 <div style="margin-left:auto;margin-right:auto;" class="col-md-8">
                                         <p class="text-left"><h6 class="text-muted">Adresse</h6></p>
                                         <div class="form-group row mx-auto">
+
+                                                <input id="pac-input" class="controls" type="text"
+                                                placeholder="Entrez le nom de restaurant">
                                                 <div style="height: 30em " id="map" class="form-control"></div>
+                                                <input type="hidden" id="place-name" name="place-name" />
+                                                <input type="hidden" id="place-id" name="place-id" />
+                                                <input type="hidden" id="loc-lat" name="latitude" />
+                                                <input type="hidden" id="loc-lon" name="longitude" />
+
+                                                
                                         </div>
                                 </div>
                                 
@@ -150,20 +287,77 @@ $_SESSION["icon"]='la la-cutlery';
 </section>
 @push('scripts')
 <script>
-        var map;
         function initMap() {
-          map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 8
+
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13
+        });
+
+        var input = document.getElementById('pac-input');
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        var infowindow = new google.maps.InfoWindow();
+        var infowindowContent = document.getElementById('infowindow-content');
+        infowindow.setContent(infowindowContent);
+        var marker = new google.maps.Marker({
+          map: map
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+
+        autocomplete.addListener('place_changed', function() {
+          infowindow.close();
+          var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            return;
+          }
+
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+          }
+          marker.setPlace({
+            placeId: place.place_id,
+            location: place.geometry.location
           });
-        }
+          marker.setVisible(true);
+          $("#place-name").val(place.name);
+          $("#place-id").val(place.place_id);
+          $("#loc-lon").val(place.geometry.location.lng);
+          $("#loc-lat").val(place.geometry.location.lat);
+        });
+
+      }
       </script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWrVKdYX_YEMDK_vzv8GfelXNvbHH0DW8&callback=initMap"
-      async defer></script>
+      <script type="text/javascript" src='https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyCk4TstMaD3JEeFg53JceJ_Bw9u_gIV_Gg&callback=initMap' async defer></script>
 <script src="{{mix('/app-assets/js/select2/select2.min.js')}}"></script>
 <script>
     var url = "{{ url('/restaurant/getData') }}";
+
+    function delete_mitem(d){
+        d.closest('tr').remove();
+    }
+
     $(document).ready(function () {
+
+        $("#add_menu_item").on('click', function(e){
+            e.preventDefault();
+            $("tbody#rest_menu").append('<tr class="row">'+
+                    '<td class="col-md-10"><input type="text" class="form-control" name="m_item[]" /></td>'+
+                    '<td class="col-md-2"><input type="text" class="form-control" name="m_price[]" /><input type="button" onclick="delete_mitem(this)" class="mt-1 btn btn-danger btn-block btn-sm" value="Supprimer" /></td>'+
+                '</tr>');
+        });
+
+
         var table =$('#restaurant_table').DataTable({
 processing:true,
 serverSide:true,
@@ -193,21 +387,47 @@ var rowSelected = table.row(this).data();
 $('[name="id"]')[0].value=rowSelected.id;
 $('[name="name"]')[0].value=rowSelected.name;
 $('[name="bookingEmail"]')[0].value=rowSelected.bookingEmail;
+$('[name="phone"]')[0].value=rowSelected.phone;
+for(i=0; i<=6; i++){
+    $('[name="periods['+i+'][0]"]')[0].value=rowSelected.periods[i][0];
+    $('[name="periods['+i+'][1]"]')[0].value=rowSelected.periods[i][1];
+}
 var values=rowSelected.name_category;
 if(values!=""){
-$.ajax({
-        url: '/restaurant/getCategories/'+rowSelected.id,
-        type: "GET",
-        dataType: "json",
-        success:function(data) { 
-        $('select[name="categories[]"]').empty();
-        $.each(data, function(key, value) {
-            $('select[name="categories[]"]').append('<option selected value="'+ key +'">'+ value +'</option>');
-        });
-        }
+    $.ajax({
+            url: '/restaurant/getCategories/'+rowSelected.id,
+            type: "GET",
+            dataType: "json",
+            success:function(data) { 
+            $('select[name="categories[]"]').empty();
+            $.each(data, function(key, value) {
+                $('select[name="categories[]"]').append('<option selected value="'+ key +'">'+ value +'</option>');
+            });
+            }
     });
 }
 else{$('select[name="categories[]"]').empty();}
+
+$.ajax({
+    url: '/restaurant/getMenu/'+rowSelected.id,
+        type: "GET",
+        dataType: "json",
+        success:function(data) { 
+            $("tbody#rest_menu").empty();
+            $.each(data, function(idx, rmenu) {
+                $("tbody#rest_menu").append('<tr class="row">'+
+                        '<td class="col-md-10"><input type="text" class="form-control" name="m_item[]" value="'+rmenu.item+'" /></td>'+
+                        '<td class="col-md-2"><input type="text" class="form-control" name="m_price[]" value="'+rmenu.price+'" /><input type="button" onclick="delete_mitem(this)" class="mt-1 btn btn-danger btn-block btn-sm" value="Supprimer" /></td>'+
+                    '</tr>');
+            });
+            $("tbody#rest_menu").append(`<tr class="row">
+                    <td class="col-md-10"><input type="text" class="form-control" name="m_item[]" /></td>
+                    <td class="col-md-2">
+                    <input type="text" class="form-control" name="m_price[]" />
+                    </td>
+                </tr>`);
+    }
+});
 
 });
 $("#reset").click(function() {

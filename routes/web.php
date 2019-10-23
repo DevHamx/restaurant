@@ -20,4 +20,5 @@ Route::get('restaurant', 'RestaurantsController@index')->name('category');
 Route::post('restaurant/operation', 'RestaurantsController@restaurantOperations');
 Route::get('restaurant/getData', 'RestaurantsController@getData')->name('restaurant.getData');
 Route::get('restaurant/getCategories/{id}', 'RestaurantsController@getCategories')->name('restaurant.getCategories');
+Route::get('restaurant/getMenu/{id}', 'RestaurantsController@getMenu')->name('restaurant.getMenu');
 Route::get('/', 'HomeController@index')->name('home');
