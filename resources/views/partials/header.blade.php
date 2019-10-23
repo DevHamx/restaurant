@@ -118,7 +118,7 @@
     <div style="display:flex;justify-content:center;align-items:center;" class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-fixed navbar-dark navbar-without-dd-arrow navbar-shadow navbar-brand-center" role="navigation" data-menu="menu-wrapper" data-nav="brand-center">
     <div class="navbar-container main-menu-content" data-menu="menu-container">
         <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item"><a class="nav-link" href="/"><i class="la la-home"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/"><i class="la la-home"></i><span>Tableau de bord</span></a></li>
             <li class="nav-item"><a class="nav-link" href="/restaurant"><i class="la la-cutlery"></i><span>Restaurant</span></a></li>
             <li class="nav-item"><a class="nav-link" href="/category"><i class="la la-th-list"></i><span>Catégories des Restaurants</span></a></li>           
         </ul>
