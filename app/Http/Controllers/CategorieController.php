@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use Yajra\DataTables\Datatables;
+
 use JsValidator;
 
 class CategorieController extends Controller
@@ -16,7 +17,11 @@ class CategorieController extends Controller
     public function index()
     {
         $validator = JsValidator::make($this->validationRules);
-        return view('pages.category')->with('validator',$validator);
+        $categories = Category::where("parent_id",null)->pluck('name', 'id');
+        return view('pages.category')->with([
+            'validator'=>$validator,
+            'categories'=>$categories
+        ]);
     }
 
     
@@ -60,13 +65,27 @@ class CategorieController extends Controller
     {
         if ($request->ajax()) {
             $categories = Category::orderBy('updated_at','desc')->get();                        
-            return Datatables::of($categories)->make(true);
+            return Datatables::of($categories)
+            ->addColumn('parent_name',function(Category $categorie){
+                $parentName=$categorie->parent_id!=null?Category::find($categorie->parent_id)->name:null;
+                return $parentName;
+            })
+            
+            ->make(true);
         }
     }
 
     public function updateOrAddCategory(Request $request, $category)
     {
         $category->name=$request->input('name');
-        $category->save();            
+        if ($request->input('sousC')==0) {
+            //parent
+            $category->saveAsRoot();
+        } else {
+            //child
+            $parent = Category::find($request->input('categories'));
+            $parent->appendNode($category);
+        }
+                  
     }
 }

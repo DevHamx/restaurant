@@ -19,7 +19,7 @@ class RestaurantsController extends Controller
     public function index()
     {
         $validator = JsValidator::make($this->validationRules);
-        $categories = Category::pluck("name","id");
+        $categories = Category::where("parent_id","!=",null)->pluck("name","id");
         return view('pages.restaurant')->with([
             'validator'=>$validator,
             'categories'=>$categories
