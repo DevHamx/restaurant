@@ -15,7 +15,8 @@
         "laravel/framework": "6.3.0",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^6.0.3",
-        "yajra/laravel-datatables-oracle": "~9.0"
+        "yajra/laravel-datatables-oracle": "~9.0",
+        "ybr-nx/laravel-mariadb": "^1.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

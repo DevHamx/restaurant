@@ -62,6 +62,7 @@ class RestaurantsController extends Controller
             ]);  
             $restaurant = Restaurant::where('id',$request->input('id'))->first();
             $restaurant->categories()->detach();
+            $restaurant->menuItems()->delete();
             $restaurant->delete();
             return \redirect('/restaurant')->with('success','La Restaurant : '.$request->input('name').' a été supprimer avec succès.');
             break;
@@ -86,6 +87,8 @@ class RestaurantsController extends Controller
         $restaurant->name=$request->input('name');
         $restaurant->bookingEmail=$request->input('bookingEmail');
         $restaurant->phone=$request->input('phone');
+        $restaurant->latitude=$request->input('latitude');
+        $restaurant->longitude=$request->input('longitude');
         $restaurant->periods=$request->input('periods');
         $categories = $request->input('categories');
         $restaurant->save();            

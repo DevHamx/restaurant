@@ -17,8 +17,8 @@ class CreateRestaurantsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('bookingEmail');
-            $table->double('longitude');
-            $table->double('latitude');
+            $table->double('longitude')->default(0);
+            $table->double('latitude')->default(0);
             $table->timestamps();
         });
     }

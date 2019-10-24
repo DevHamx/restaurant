@@ -10,6 +10,29 @@
 @endcomponent
 @include('partials.messages')
 <link rel="stylesheet" type="text/css" href="{{mix('/app-assets/css/select2/select2.min.css')}}">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<style type="text/css">
+    .controls {
+        background-color: #fff;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        height: 29px;
+        margin-left: 17px;
+        margin-top: 10px;
+        outline: none;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+.controls:focus {
+border-color: #4d90fe;
+}
+</style>
 <section id="horizontal-form-layouts">
     <div class="row">
         <div class="col-md-12">
@@ -118,38 +141,38 @@
   <tbody>
     <tr>
       <td>Lundi</td>
-      <td>{{Form::text('periods[0][0]', '',['class'=>'form-control'])}}</td>
-      <td>{{Form::text('periods[0][1]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[0][0]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[0][1]', '',['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Mardi</td>
-      <td>{{Form::text('periods[1][0]', '',['class'=>'form-control'])}}</td>
-      <td>{{Form::text('periods[1][1]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[1][0]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[1][1]', '',['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Mercredi</td>
-      <td>{{Form::text('periods[2][0]', '',['class'=>'form-control'])}}</td>
-      <td>{{Form::text('periods[2][1]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[2][0]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[2][1]', '',['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Jeudi</td>
-      <td>{{Form::text('periods[3][0]', '',['class'=>'form-control'])}}</td>
-      <td>{{Form::text('periods[3][1]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[3][0]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[3][1]', '',['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Vendredi</td>
-      <td>{{Form::text('periods[4][0]', '',['class'=>'form-control'])}}</td>
-      <td>{{Form::text('periods[4][1]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[4][0]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[4][1]', '',['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Samedi</td>
-      <td>{{Form::text('periods[5][0]', '',['class'=>'form-control'])}}</td>
-      <td>{{Form::text('periods[5][1]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[5][0]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[5][1]', '',['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Dimanche</td>
-      <td>{{Form::text('periods[6][0]', '',['class'=>'form-control'])}}</td>
-      <td>{{Form::text('periods[6][1]', '',['class'=>'form-control'])}}</td>
+      <td>{{Form::text('periods[6][0]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[6][1]', '',['class'=>'form-control timepicker'])}}</td>
     </tr>
   </tbody>
 </table>
@@ -213,8 +236,8 @@
                                         <p class="text-left"><h6 class="text-muted">Adresse</h6></p>
                                         <div class="form-group row mx-auto">
 
-                                                <input id="pac-input" class="controls" type="text"
-                                                placeholder="Entrez le nom de restaurant">
+                                                <!--<input id="pac-input" class="controls" type="text"
+                                                placeholder="Entrez le nom de restaurant">-->
                                                 <div style="height: 30em " id="map" class="form-control"></div>
                                                 <input type="hidden" id="place-name" name="place-name" />
                                                 <input type="hidden" id="place-id" name="place-id" />
@@ -290,59 +313,154 @@
 </section>
 @push('scripts')
 <script>
-        function initMap() {
+    var map;
+    var marker;
+    var faisalabad = {lat: -33.8688, lng: 151.2195};
 
+    function addYourLocationButton(map, marker) {
+    var controlDiv = document.createElement('div');
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -33.8688, lng: 151.2195},
-          zoom: 13
-        });
+    var firstChild = document.createElement('button');
+    firstChild.style.backgroundColor = '#fff';
+    firstChild.style.border = 'none';
+    firstChild.style.outline = 'none';
+    firstChild.style.width = '38px';
+    firstChild.style.height = '38px';
+    firstChild.style.borderRadius = '2px';
+    firstChild.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+    firstChild.style.cursor = 'pointer';
+    firstChild.style.marginRight = '10px';
+    firstChild.style.padding = '0px';
+    firstChild.title = 'Your Location';
+    controlDiv.appendChild(firstChild);
 
-        var input = document.getElementById('pac-input');
+    var secondChild = document.createElement('div');
+    secondChild.style.margin = '0 auto';
+    secondChild.style.width = '18px';
+    secondChild.style.height = '18px';
+    secondChild.style.backgroundImage = 'url(https://maps.gstatic.com/tactile/mylocation/mylocation-sprite-1x.png)';
+    secondChild.style.backgroundSize = '180px 18px';
+    secondChild.style.backgroundPosition = '0px 0px';
+    secondChild.style.backgroundRepeat = 'no-repeat';
+    secondChild.id = 'you_location_img';
+    firstChild.appendChild(secondChild);
 
-        var autocomplete = new google.maps.places.Autocomplete(input);
-        autocomplete.bindTo('bounds', map);
+    google.maps.event.addListener(map, 'dragend', function() {
+        $('#you_location_img').css('background-position', '0px 0px');
+    });
 
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    firstChild.addEventListener('click', function(e) {
+        e.preventDefault();
+        var imgX = '0';
+        var animationInterval = setInterval(function(){
+            if(imgX == '-18') imgX = '0';
+            else imgX = '-18';
+            $('#you_location_img').css('background-position', imgX+'px 0px');
+        }, 500);
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                $("#loc-lon").val(position.coords.longitude);
+                $("#loc-lat").val(position.coords.latitude);
+                marker.setPosition(latlng);
+                map.setZoom(16);
+                map.setCenter(latlng);
+                clearInterval(animationInterval);
+                $('#you_location_img').css('background-position', '-144px 0px');
+            });
+        }
+        else{
+            clearInterval(animationInterval);
+            $('#you_location_img').css('background-position', '0px 0px');
+        }
+    });
 
-        var infowindow = new google.maps.InfoWindow();
-        var infowindowContent = document.getElementById('infowindow-content');
-        infowindow.setContent(infowindowContent);
-        var marker = new google.maps.Marker({
-          map: map
-        });
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
+    controlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+}
 
-        autocomplete.addListener('place_changed', function() {
-          infowindow.close();
-          var place = autocomplete.getPlace();
-          if (!place.geometry) {
-            return;
-          }
+    function initMap() {
 
-          if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-          } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);
-          }
-          marker.setPlace({
-            placeId: place.place_id,
-            location: place.geometry.location
-          });
-          marker.setVisible(true);
-          $("#place-name").val(place.name);
-          $("#place-id").val(place.place_id);
-          $("#loc-lon").val(place.geometry.location.lng);
-          $("#loc-lat").val(place.geometry.location.lat);
-        });
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: -33.8688, lng: 151.2195},
+      zoom: 16
+    });
 
+    
+
+    marker = new google.maps.Marker({
+        map:map,
+        draggable:true,
+        position: {lat: -33.8688, lng: 151.2195}
+    });
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        $("#loc-lon").val(position.coords.longitude);
+        $("#loc-lat").val(position.coords.latitude);
+        map.setCenter(pos);
+        marker.setPosition(pos);
+      }, function() {
+        //handleLocationError(true, infoWindow, map.getCenter());
+      });
+    }
+
+    addYourLocationButton(map, marker);
+
+    /*var input = document.getElementById('pac-input');
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);*/
+
+    var infowindow = new google.maps.InfoWindow();
+    var infowindowContent = document.getElementById('infowindow-content');
+    infowindow.setContent(infowindowContent);
+
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+
+    google.maps.event.addListener(marker, 'dragend', function() {
+        pos = marker.getPosition();
+        $("#loc-lon").val(marker.getPosition().lng());
+        $("#loc-lat").val(marker.getPosition().lat());
+    });
+
+    /*autocomplete.addListener('place_changed', function() {
+      infowindow.close();
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        return;
       }
-      </script>
-      <script type="text/javascript" src='https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyCk4TstMaD3JEeFg53JceJ_Bw9u_gIV_Gg&callback=initMap' async defer></script>
+
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);
+      }
+      marker.setPlace({
+        placeId: place.place_id,
+        location: place.geometry.location
+      });
+      //marker.draggable = true;
+      $("#place-name").val(place.name);
+      $("#place-id").val(place.place_id);
+      $("#loc-lon").val(place.geometry.location.lng);
+      $("#loc-lat").val(place.geometry.location.lat);
+    });*/
+
+  }
+  </script>
+      <script type="text/javascript" src='https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyAaKahIho8wMI6UUS1a3Y32Dhj9RDZRCCk&callback=initMap' async defer></script>
 <script src="{{mix('/app-assets/js/select2/select2.min.js')}}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script>
     var url = "{{ url('/restaurant/getData') }}";
 
@@ -351,6 +469,17 @@
     }
 
     $(document).ready(function () {
+        $('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    interval: 60,
+    minTime: '0',
+    maxTime: '6:00pm',
+    defaultTime: '0',
+    startTime: '08:00',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
 
         $("#add_menu_item").on('click', function(e){
             e.preventDefault();
@@ -395,24 +524,17 @@ for(i=0; i<=6; i++){
     $('[name="periods['+i+'][0]"]')[0].value=rowSelected.periods[i][0];
     $('[name="periods['+i+'][1]"]')[0].value=rowSelected.periods[i][1];
 }
+var pos = {
+  lat: parseFloat(rowSelected.latitude),
+  lng: parseFloat(rowSelected.longitude)
+};
+map.setCenter(pos);
+marker.setPosition(pos);
+
 var values=rowSelected.name_category;
 if(values!=""){
-    $.ajax({
-            url: '/restaurant/getCategories/'+rowSelected.id,
-            type: "GET",
-            dataType: "json",
-            success:function(data) { 
-            $('select[name="categories[]"]').empty();
-            $.each(data, function(key, value) {
-                $('select[name="categories[]"]').append('<option selected value="'+ key +'">'+ value +'</option>');
-            });
-            }
-    });
-}
-else{$('select[name="categories[]"]').empty();}
-
 $.ajax({
-    url: '/restaurant/getMenu/'+rowSelected.id,
+    url: '/restaurant/getCategories/'+rowSelected.id,
         type: "GET",
         dataType: "json",
         success:function(data) { 
@@ -428,16 +550,12 @@ $.ajax({
 else{
     $( "div#divCategories" ).find(".select2-selection__rendered .select2-selection__choice").remove();
     $('select#categories option').removeAttr("selected");}
-||||||| merged common ancestors
-        $('select[name="categories[]"]').empty();
-        $.each(data, function(key, value) {
-            $('select[name="categories[]"]').append('<option selected value="'+ key +'">'+ value +'</option>');
-        });
-        }
-    });
-}
-else{$('select[name="categories[]"]').empty();}
 
+    $.ajax({
+    url: '/restaurant/getMenu/'+rowSelected.id,
+        type: "GET",
+        dataType: "json",
+        success:function(data) { 
             $("tbody#rest_menu").empty();
             $.each(data, function(idx, rmenu) {
                 $("tbody#rest_menu").append('<tr class="row">'+
@@ -454,8 +572,10 @@ else{$('select[name="categories[]"]').empty();}
     }
 });
 
-
+    
 });
+
+
 $("#reset").click(function() {
 $("#form_restaurants")[0].reset();
 }); 
