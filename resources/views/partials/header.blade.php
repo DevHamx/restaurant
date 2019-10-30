@@ -71,7 +71,7 @@
                             <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="javascript:void(0)">Read all notifications</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown dropdown-notification nav-item"><a id="messages" class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-mail"> </i></a>
+                    <li class="dropdown dropdown-notification nav-item"><a id="messages" class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-mail"> </i><span class="badge badge-pill badge-danger badge-up badge-glow">4</span></a>
                         <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                             <li class="dropdown-menu-header">
                                 <h6 class="dropdown-header m-0"><span class="grey darken-2">Messages</span></h6><span class="notification-tag badge badge-warning float-right m-0">4 New</span>

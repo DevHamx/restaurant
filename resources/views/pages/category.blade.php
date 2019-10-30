@@ -15,7 +15,7 @@ $_SESSION["icon"]='la la-th-list';
 @include('partials.messages')
 <link rel="stylesheet" type="text/css" href="{{mix('/app-assets/css/select2/select2.min.css')}}">
 <section id="horizontal-form-layouts">
-    <div class="row">
+    <div id="infoDiv" style="display:none;" class="row">
         <div class="col-md-12">
             <div class="card main-card">
                 <div class="card-header">
@@ -45,13 +45,13 @@ $_SESSION["icon"]='la la-th-list';
                                                         <h6 class="text-muted">Nom</h6>                                                           
                                                     </div>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="sousCategory">
+                                                            <input type="checkbox" class="custom-control-input" id="sousCategory" checked>
                                                             <label class="custom-control-label" for="sousCategory">Sous Catégorie</label>
                                                             </div>                                                           
                                                </div>
                                                 <div class="input-group">
                                                     {{ Form::hidden('id', '') }}
-                                                    {{ Form::hidden('sousC', 0) }}
+                                                    {{ Form::hidden('sousC', 1) }}
                                                     {{Form::text('name', '',['class'=>'form-control' ,'placeholder'=>'name','autofocus'])}}                                                                
                                                     <div class="input-group-append">
                                                         <span class="input-group-text" id="basic-addon4"><i class="la la-edit"></i></span>
@@ -61,7 +61,7 @@ $_SESSION["icon"]='la la-th-list';
                                         </div>
                                     </div>
                                 </div>
-                                <div style="display:none;" id="divCategories" class="col-md-6">
+                                <div id="divCategories" class="col-md-6">
                                     <div class="form-group row mx-auto">
                                             <div class="col-md-12">
                                         <fieldset>
@@ -150,12 +150,12 @@ $_SESSION["icon"]='la la-th-list';
     $(document).ready(function () {
         $('#sousCategory').change(function() {
  if(this.checked) {
-    $('#divCategories').show()
+    $('#divCategories').fadeIn('slow','linear');
     $('[name="sousC"]')[0].value=1;
  }
  else{
     $('[name="sousC"]')[0].value=0;
-    $('#divCategories').hide()
+    $('#divCategories').fadeOut('slow','linear');
  }
 });
         var table =$('#category_table').DataTable({
@@ -180,6 +180,8 @@ columns:[
 ]
 });
 table.on('click', 'tbody tr', function() {
+        $('#infoDiv').fadeIn('slow','linear');
+
 var rowSelected = table.row(this).data();
 $('[name="id"]')[0].value=rowSelected.id;
 $('[name="name"]')[0].value=rowSelected.name;

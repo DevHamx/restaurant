@@ -42,6 +42,7 @@
     </div>
     <script src="{{mix('/app-assets/js/all.min.js')}}"></script>
     @stack('scripts')
+    @stack('scriptsMenu')
     <script>
         //const tableFr = "{{ URL::asset('app-assets/languages/datatable-fr.json') }}";
         $.ajaxSetup({
