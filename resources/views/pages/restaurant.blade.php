@@ -34,7 +34,7 @@ border-color: #4d90fe;
 }
 </style>
 <section id="horizontal-form-layouts">
-    <div class="row">
+    <div id="infoDiv" style="display:none;" class="row">
         <div class="col-md-12">
             <div class="card main-card">
                 <div class="card-header">
@@ -515,6 +515,8 @@ columns:[
 ]
 });
 table.on('click', 'tbody tr', function() {
+    $('#infoDiv').fadeIn('slow','linear');
+    $('#ajouterBtn').fadeOut('slow','linear');
 var rowSelected = table.row(this).data();
 $('[name="id"]')[0].value=rowSelected.id;
 $('[name="name"]')[0].value=rowSelected.name;

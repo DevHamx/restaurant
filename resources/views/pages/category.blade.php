@@ -181,12 +181,22 @@ columns:[
 });
 table.on('click', 'tbody tr', function() {
         $('#infoDiv').fadeIn('slow','linear');
+    $('#ajouterBtn').fadeOut('slow','linear');
 
 var rowSelected = table.row(this).data();
 $('[name="id"]')[0].value=rowSelected.id;
 $('[name="name"]')[0].value=rowSelected.name;
-$("categories").val(rowSelected.parent_id);
-
+if (rowSelected.parent_id!=null) {
+    $('#sousCategory').prop("checked", true);
+    $('[name="sousC"]')[0].value=1;
+    $('#divCategories').fadeIn('slow','linear');
+    $('select#categories option[value="'+rowSelected.parent_id+'"]').remove();
+    $('select[name="categories"]').append('<option selected value="'+ rowSelected.parent_id +'">'+ rowSelected.parent_name +'</option>');
+} else {
+    $('[name="sousC"]')[0].value=0;
+    $('#divCategories').fadeOut('slow','linear');
+    $('#sousCategory').prop("checked", false);
+}
 });
 $("#reset").click(function() {
 $("#form_categories")[0].reset();
