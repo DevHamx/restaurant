@@ -15,7 +15,9 @@
 Auth::routes();
 Route::get('category', 'CategorieController@index')->name('category');
 Route::post('category/operation', 'CategorieController@categoryOperations');
-Route::get('category/getData', 'CategorieController@getData')->name('category.getData');
+Route::get('category/getSousCategoriesData', 'CategorieController@getSousCategoriesData')->name('category.getSousCategoriesData');
+Route::get('category/getSousCategories/{id}', 'CategorieController@getSousCategories')->name('category.getSousCategories');
+Route::get('category/getCategoriesParentaleData', 'CategorieController@getCategoriesParentaleData')->name('category.getCategoriesParentaleData');
 Route::get('restaurant', 'RestaurantsController@index')->name('category');
 Route::post('restaurant/operation', 'RestaurantsController@restaurantOperations');
 Route::get('restaurant/getData', 'RestaurantsController@getData')->name('restaurant.getData');

@@ -61,7 +61,7 @@ $_SESSION["icon"]='la la-th-list';
                                         </div>
                                     </div>
                                 </div>
-                                <div id="divCategories" class="col-md-6">
+                                <div id="divCategoriesParentale" class="col-md-6">
                                     <div class="form-group row mx-auto">
                                             <div class="col-md-12">
                                         <fieldset>
@@ -76,6 +76,26 @@ $_SESSION["icon"]='la la-th-list';
                                         <div class="col-md-12">
                                                 {{ Form::select('categories',$categories,null,['id'=>'categories','class'=>'select2 form-control select2-hidden-accessible','tabindex'=>'-1', 'aria-hidden'=>'true']) }}
 
+                                        </div>
+                                    </div>
+                                        </fieldset>
+                                </div>
+                                    </div>
+                                </div>
+                                <div style="display: none" id="divSousCategories" class="col-md-6">
+                                    <div class="form-group row mx-auto">
+                                            <div class="col-md-12">
+                                        <fieldset>
+                                                <div class="d-flex justify-content-between">
+                                                        <div>
+                                                            <h6 class="text-muted">Sous Catégories</h6>                                                           
+                                                        </div>
+                                                            <div class="custom-control custom-checkbox">
+                                                                </div>                                                           
+                                                   </div>
+                                        <div class="row"style="display:flex;align-items:center;">
+                                        <div class="col-md-12">
+                                            {{ Form::select('sousCategories[]',[],null,['class'=>'select2-tags form-control select2-hidden-accessible','multiple'=>'multiple','tabindex'=>'-1', 'aria-hidden'=>'true']) }}
                                         </div>
                                     </div>
                                         </fieldset>
@@ -107,13 +127,13 @@ $_SESSION["icon"]='la la-th-list';
         </div>
     </div>
 </section>
-<section id="bootstrap3">
+<section>
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-6">
             <div class="card main-card">
                 <div class="card-header">
                     <div style="display:flex;align-items:center;"><i class="la la-bars icon-card-title"></i>
-                        <h3 class="card-title">Liste des Categories</h3></div>
+                        <h3 class="card-title">Liste des Sous Categories Categories</h3></div>
                         <a class="card-minus" data-action="collapse"><i class="ft-minus"></i></a>   
                 </div>
                 <div class="card-content collapse show">
@@ -122,7 +142,7 @@ $_SESSION["icon"]='la la-th-list';
                             <div id="user_table_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table class="table table-striped table-bordered bootstrap-3" id="category_table" role="grid" aria-describedby="user_table_info" width="100%">
+                                        <table class="table table-striped table-bordered bootstrap-3" id="sousCategory_table" role="grid" aria-describedby="user_table_info" width="100%">
                                             <thead>
                                                 <tr role="row">
                                                     <th style="display: none;" tabindex="1" aria-sort="descending">updated at</th>
@@ -141,24 +161,56 @@ $_SESSION["icon"]='la la-th-list';
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card main-card">
+                <div class="card-header">
+                    <div style="display:flex;align-items:center;"><i class="la la-bars icon-card-title"></i>
+                        <h3 class="card-title">Liste des Catégories Parentale</h3></div>
+                        <a class="card-minus" data-action="collapse"><i class="ft-minus"></i></a>   
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body card-dashboard">
+                        <div class="table-responsive">
+                            <div id="user_table_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered bootstrap-3" id="parentCategory_table" role="grid" aria-describedby="user_table_info" width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th style="display: none;" tabindex="1" aria-sort="descending">updated at</th>
+                                                    <th style="display: none;" class="sorting" tabindex="2" rowspan="1" colspan="1" >Id</th>                                                        
+                                                    <th class="sorting" tabindex="2" rowspan="1" colspan="1" >Nom</th>
+                                                    <th class="sorting" tabindex="2" rowspan="1" colspan="1" >Sous Categories</th>
+                                                    </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 @push('scripts')
 <script src="{{mix('/app-assets/js/select2/select2.min.js')}}"></script>
 <script>
-    var url = "{{ url('/category/getData') }}";
     $(document).ready(function () {
         $('#sousCategory').change(function() {
  if(this.checked) {
-    $('#divCategories').fadeIn('slow','linear');
+    $('#divSousCategories').hide();
+    $('#divCategoriesParentale').fadeIn('slow','linear');
     $('[name="sousC"]')[0].value=1;
  }
  else{
     $('[name="sousC"]')[0].value=0;
-    $('#divCategories').fadeOut('slow','linear');
+    $('#divCategoriesParentale').hide();
+    $('#divSousCategories').fadeIn('slow','linear');
  }
 });
-        var table =$('#category_table').DataTable({
+        var table =$('#sousCategory_table').DataTable({
 processing:true,
 serverSide:true,
 select : true,
@@ -169,7 +221,7 @@ language: {
 */
 order :[],
 ajax:{
-    url: url,
+    url: "{{ url('/category/getSousCategoriesData') }}",
 },
 columns:[
     {data: 'updated_at',name: 'updated_at',visible:false},
@@ -179,6 +231,7 @@ columns:[
     {data: 'parent_name',name: 'parent_name'},
 ]
 });
+
 table.on('click', 'tbody tr', function() {
         $('#infoDiv').fadeIn('slow','linear');
     $('#ajouterBtn').fadeOut('slow','linear');
@@ -186,17 +239,64 @@ table.on('click', 'tbody tr', function() {
 var rowSelected = table.row(this).data();
 $('[name="id"]')[0].value=rowSelected.id;
 $('[name="name"]')[0].value=rowSelected.name;
-if (rowSelected.parent_id!=null) {
     $('#sousCategory').prop("checked", true);
     $('[name="sousC"]')[0].value=1;
-    $('#divCategories').fadeIn('slow','linear');
+    $('#divSousCategories').hide();
+    $('#divCategoriesParentale').fadeIn('slow','linear');
     $('select#categories option[value="'+rowSelected.parent_id+'"]').remove();
     $('select[name="categories"]').append('<option selected value="'+ rowSelected.parent_id +'">'+ rowSelected.parent_name +'</option>');
-} else {
-    $('[name="sousC"]')[0].value=0;
-    $('#divCategories').fadeOut('slow','linear');
-    $('#sousCategory').prop("checked", false);
-}
+});
+
+var tableP =$('#parentCategory_table').DataTable({
+processing:true,
+serverSide:true,
+select : true,
+/*
+language: {
+    url : "{{ URL::asset('app-assets/languages/datatable-fr.json') }}"
+},
+*/
+order :[],
+ajax:{
+    url: "{{ url('/category/getCategoriesParentaleData') }}",
+},
+columns:[
+    {data: 'updated_at',name: 'updated_at',visible:false},
+    {data: 'id',name: 'id',visible:false},
+    {data: 'name',name: 'name'},
+    {data: 'sousCategories',name: 'sousCategories'},
+]
+});
+
+
+tableP.on('click', 'tbody tr', function() {
+    $('#infoDiv').fadeIn('slow','linear');
+    $('#ajouterBtn').fadeOut('slow','linear');
+
+var rowSelected = tableP.row(this).data();
+$('[name="id"]')[0].value=rowSelected.id;
+$('[name="name"]')[0].value=rowSelected.name;
+$('[name="sousC"]')[0].value=0;
+$('#divCategoriesParentale').hide();
+$('#divSousCategories').fadeIn('slow','linear');
+$('#sousCategory').prop("checked", false);
+var values=rowSelected.sousCategories;
+  if(values!=""){
+    $.ajax({
+            url: '/category/getSousCategories/'+rowSelected.id,
+            type: "GET",
+            dataType: "json",
+            success:function(data) { 
+            $('select[name="sousCategories[]"]').empty();
+            $.each(data, function(key, value) {
+                $('select[name="sousCategories[]"]').append('<option  value="'+ value +'" selected>'+ value +'</option>');            
+            });
+            }
+        });
+    }
+    else{
+        $('select[name="sousCategories[]"]').empty();
+    }
 });
 $("#reset").click(function() {
 $("#form_categories")[0].reset();
