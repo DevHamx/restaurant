@@ -57,7 +57,7 @@ class RestaurantsController extends Controller
             ]);  
             $restaurant = Restaurant::where('id',$request->input('id'))->first();
             $restaurant->categories()->detach();
-            $restaurant->menuItems()->delete();
+            $restaurant->menus()->delete();
             $restaurant->delete();
             return \redirect('/restaurant')->with('success','La Restaurant : '.$request->input('name').' a été supprimer avec succès.');
             break;
