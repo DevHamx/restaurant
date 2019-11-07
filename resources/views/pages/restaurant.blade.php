@@ -194,8 +194,22 @@ border-color: #4d90fe;
 
                     <div class="row"style="display:flex;align-items:center;">
                         <div class="col-md-12">
-                            
-<table class="table table-condensed table-hover">
+
+                            <div class="accordion" id="accordionRestoMenu">
+                                
+<div class="card" style="margin-bottom: 15px;">
+    <div class="card-header" id="heading0" style="padding: 0px !important;">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse0" aria-expanded="true" aria-controls="collapse0">
+            Menu #1 
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapse0" class="collapse" aria-labelledby="heading0" data-parent="#accordionRestoMenu">
+      <div class="card-body">
+        <input type="text" name="m_menu[]" placeholder="Titre de menu" class="form-control menu-title" /><br />
+        <table class="table table-condensed table-hover">
             <thead>
                 <tr class="row">
                     <th class="col-md-10">Elément</th>
@@ -204,9 +218,9 @@ border-color: #4d90fe;
             </thead>
             <tbody id="rest_menu">
                 <tr class="row">
-                    <td class="col-md-10"><input type="text" class="form-control" name="m_item[]" /></td>
+                    <td class="col-md-10"><input type="text" class="form-control" name="m_item[0][]" /></td>
                     <td class="col-md-2">
-                    <input type="text" class="form-control" name="m_price[]" />
+                    <input type="text" class="form-control" name="m_price[0][]" />
                     </td>
                 </tr>
             </tbody>
@@ -218,6 +232,14 @@ border-color: #4d90fe;
                 </tr>
             </tfoot>
         </table>
+      </div>
+    </div>
+</div>
+
+                            </div>
+
+    <button id="add_menu" class="btn btn-success btn-sm">Ajouter menu</button>
+                        
 
                         </div>
                     </div>
@@ -468,6 +490,14 @@ border-color: #4d90fe;
         d.closest('tr').remove();
     }
 
+    function delete_m_menu(d){
+        d.closest('div.card').remove();
+    }
+
+    function change_menu_title(d){
+        d.closest('div.card').find('h2 button').text( $(this).val() );
+    }
+
     $(document).ready(function () {
         $('.timepicker').timepicker({
     timeFormat: 'h:mm p',
@@ -481,12 +511,62 @@ border-color: #4d90fe;
     scrollbar: true
 });
 
-        $("#add_menu_item").on('click', function(e){
+        $(document).on('keyup', ".menu-title", function () {
+            if( $.trim( $(this).val() )  != '' )
+                $(this).closest('div.card').find('h2 button.btn-link').text( $(this).val() );
+        });
+
+        $(document).on('click', "button#add_menu_item", function(e){
             e.preventDefault();
-            $("tbody#rest_menu").append('<tr class="row">'+
-                    '<td class="col-md-10"><input type="text" class="form-control" name="m_item[]" /></td>'+
-                    '<td class="col-md-2"><input type="text" class="form-control" name="m_price[]" /><input type="button" onclick="delete_mitem(this)" class="mt-1 btn btn-danger btn-block btn-sm" value="Supprimer" /></td>'+
+            var idx = $("#accordionRestoMenu .card").length-1;
+            $(this).closest('table').find("tbody#rest_menu").append('<tr class="row">'+
+                    '<td class="col-md-10"><input type="text" class="form-control" name="m_item['+idx+'][]" /></td>'+
+                    '<td class="col-md-2"><input type="text" class="form-control" name="m_price['+idx+'][]" /><input type="button" onclick="delete_mitem(this)" class="mt-1 btn btn-danger btn-block btn-sm" value="Supprimer" /></td>'+
                 '</tr>');
+        });
+
+
+        $("button#add_menu").on('click', function(e){
+            e.preventDefault();
+            var idx = $("#accordionRestoMenu .card").length;
+            $("#accordionRestoMenu").append(`<div class="card" style="margin-bottom: 15px;">
+    <div class="card-header" id="heading${idx}" style="padding: 0px !important;">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse${idx}" aria-expanded="true" aria-controls="collapse${idx}">
+            Menu #${idx+1} 
+        </button> <button onclick="delete_m_menu(this)" class="btn btn-danger btn-sm"><i class="la la-trash"></i></button>
+      </h2>
+    </div>
+
+    <div id="collapse${idx}" class="collapse" aria-labelledby="heading${idx}" data-parent="#accordionRestoMenu">
+      <div class="card-body">
+        <input type="text" name="m_menu[]" placeholder="Titre de menu" class="form-control menu-title" /><br />
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr class="row">
+                    <th class="col-md-10">Elément</th>
+                    <th class="col-md-2">Prix</th>
+                </tr>
+            </thead>
+            <tbody id="rest_menu">
+                <tr class="row">
+                    <td class="col-md-10"><input type="text" class="form-control" name="m_item[${idx}][]" /></td>
+                    <td class="col-md-2">
+                    <input type="text" class="form-control" name="m_price[${idx}][]" />
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="row">
+                    <td class="col-md-12" colspan="2" style="text-align: right;">
+                        <button id="add_menu_item" class="btn btn-success btn-sm">Ajouter element</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+      </div>
+    </div>
+</div>`);
         });
 
 
@@ -514,8 +594,10 @@ columns:[
 
 ]
 });
-table.on('click', 'tbody tr', function() {
-    $('#infoDiv').fadeIn('slow','linear');
+
+table.on('click', 'tbody tr', function(){
+
+$('#infoDiv').fadeIn('slow','linear');
     $('#ajouterBtn').fadeOut('slow','linear');
 var rowSelected = table.row(this).data();
 $('[name="id"]')[0].value=rowSelected.id;
@@ -532,6 +614,9 @@ var pos = {
 };
 map.setCenter(pos);
 marker.setPosition(pos);
+
+$("input[name='latitude']").val(rowSelected.latitude);
+$("input[name='longitude']").val(rowSelected.longitude);
 
 var values=rowSelected.name_category;
 if(values!=""){
@@ -551,37 +636,92 @@ $.ajax({
 }
 else{
     $( "div#divCategories" ).find(".select2-selection__rendered .select2-selection__choice").remove();
-    $('select#categories option').removeAttr("selected");}
+    $('select#categories option').removeAttr("selected");
+}
 
     $.ajax({
     url: '/restaurant/getMenu/'+rowSelected.id,
         type: "GET",
         dataType: "json",
         success:function(data) { 
-            $("tbody#rest_menu").empty();
+            $("div#accordionRestoMenu").empty();
             $.each(data, function(idx, rmenu) {
-                $("tbody#rest_menu").append('<tr class="row">'+
-                        '<td class="col-md-10"><input type="text" class="form-control" name="m_item[]" value="'+rmenu.item+'" /></td>'+
-                        '<td class="col-md-2"><input type="text" class="form-control" name="m_price[]" value="'+rmenu.price+'" /><input type="button" onclick="delete_mitem(this)" class="mt-1 btn btn-danger btn-block btn-sm" value="Supprimer" /></td>'+
-                    '</tr>');
-            });
-            $("tbody#rest_menu").append(`<tr class="row">
-                    <td class="col-md-10"><input type="text" class="form-control" name="m_item[]" /></td>
-                    <td class="col-md-2">
-                    <input type="text" class="form-control" name="m_price[]" />
+
+                $("div#accordionRestoMenu").append(`
+<div class="card" style="margin-bottom: 15px;">
+    <div class="card-header" id="heading${idx}" style="padding: 0px !important;">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse${idx}" aria-expanded="true" aria-controls="collapse${idx}">
+            ${rmenu.title}
+        </button>
+        <button onclick="delete_m_menu(this)" class="btn btn-danger btn-sm"><i class="la la-trash"></i></button>
+      </h2>
+    </div>
+
+    <div id="collapse${idx}" class="collapse" aria-labelledby="heading${idx}" data-parent="#accordionRestoMenu">
+      <div class="card-body">
+        <input type="text" name="m_menu[]" value="${rmenu.title}" class="form-control menu-title" /><br />
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr class="row">
+                    <th class="col-md-10">Elément</th>
+                    <th class="col-md-2">Prix</th>
+                </tr>
+            </thead>
+            <tbody id="rest_menu">
+
+            </tbody>
+            <tfoot>
+                <tr class="row">
+                    <td class="col-md-12" colspan="2" style="text-align: right;">
+                        <button id="add_menu_item" class="btn btn-success btn-sm">Ajouter element</button>
                     </td>
-                </tr>`);
-    }
-});
+                </tr>
+            </tfoot>
+        </table>
+      </div>
+    </div>
+</div>`);
+
+                $.ajax({
+                    url: '/restaurant/getMenuItems/'+rmenu.id,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data){
+                        $.each(data, function(jdx, menu_item){
+                            $(`div#collapse${idx} tbody#rest_menu`).append(`
+                            <tr class="row">
+                                <td class="col-md-10"><input value="${menu_item.item}" type="text" class="form-control" name="m_item[${idx}][]" /></td>
+                                <td class="col-md-2">
+                                <input type="text" value="${menu_item.price}" class="form-control" name="m_price[${idx}][]" />
+                                </td>
+                            </tr>
+                            `);
+                        });
+                    }
+                });
+    });
 
     
+}
+
+
 });
 
 
+});
+
+
+
+
+});
+    
+
 $("#reset").click(function() {
-$("#form_restaurants")[0].reset();
+    $("#form_restaurants")[0].reset();
 }); 
-});     
+
+    
 </script>
 <!-- Laravel Javascript Validation -->
 {!! $validator->selector('#form_restaurants') !!}
