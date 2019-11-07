@@ -32,6 +32,10 @@ class RestaurantsController extends Controller
                 'name' => ['required', 'string', 'max:191','unique:restaurants'],
                 'bookingEmail' => ['required', 'email'],
                 'phone' => ['required'],
+                'm_menu' => ['required'],
+            ],
+            [
+                'm_menu.required' => 'Please add a menu',
             ]);
             $restaurant = new Restaurant();
             $this->updateOrAddRestaurant($request,$restaurant);            
@@ -45,6 +49,7 @@ class RestaurantsController extends Controller
             $restaurant = Restaurant::where('id',$request->input('id'))->first();
             $this->validate($request,[
                 'name' => ['required', 'string', 'max:191','unique:restaurants,name,'.$restaurant->id],
+                'm_menu' => ['required'],
             ]);
             
             $this->updateOrAddRestaurant($request,$restaurant);                          

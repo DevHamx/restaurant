@@ -203,6 +203,7 @@ border-color: #4d90fe;
         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse0" aria-expanded="true" aria-controls="collapse0">
             Menu #1 
         </button>
+        <button onclick="delete_m_menu(this)" class="btn btn-danger btn-sm"><i class="la la-trash"></i></button>
       </h2>
     </div>
 
