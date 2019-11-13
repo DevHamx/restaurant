@@ -14,12 +14,17 @@ class RestaurantsController extends Controller
         'bookingEmail' => ['required', 'email'],   
         'phone' => ['required'],
     ];
-    public function index()
+    public function index(Request $request)
     {
+        $restaurant = Restaurant::find($request->input('searchId'));
+        if ($restaurant==null) {
+            $restaurant =new Restaurant();
+        } 
         $validator = JsValidator::make($this->validationRules);
         $categories = Category::where("parent_id","!=",null)->pluck("name","id");
         return view('pages.restaurant')->with([
             'validator'=>$validator,
+            'restaurant'=>$restaurant,
             'categories'=>$categories
         ]);
     }
@@ -121,5 +126,10 @@ class RestaurantsController extends Controller
     public function getMenu($id_restaurant){
         $menus=Restaurant::find($id_restaurant)->menus;
         return \json_encode($menus);
+    }
+    public function getSearchRestaurants()
+    {
+        $data = Restaurant::select('id','name','name as value')->orderBy('name','asc')->get();
+        return \json_encode($data);
     }
 }
