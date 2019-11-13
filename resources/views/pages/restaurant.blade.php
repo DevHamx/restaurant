@@ -504,10 +504,10 @@ border-color: #4d90fe;
     }
 
     $(document).ready(function () {
-        if ({{$restaurant->id}}!=null) {
+        if ({{$restaurant->id!=null}}) {
             var pos = {
-          lat: {{$restaurant->latitude}},
-          lng: {{$restaurant->longitude}}
+          lat: {{$restaurant->latitude==null?0:$restaurant->latitude}},
+          lng: {{$restaurant->longitude==null?0:$restaurant->longitude}}
             };
             $("#loc-lon").val({{$restaurant->longitude}});
             $("#loc-lat").val({{$restaurant->latitude}});
