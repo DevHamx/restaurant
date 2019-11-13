@@ -21,6 +21,12 @@
         .main-card{
             margin: 0 1em;
         }
+        .search-input.open .input{
+            width: 180px !important;
+        }
+        .ui-autocomplete{
+            z-index: 2000;
+        }
     </style>  
 </head>
 <body class="horizontal-layout 2-columns pace-done horizontal-menu menu-collapsed" data-open="click" data-menu="horizontal-menu" data-col="2-columns">
@@ -50,6 +56,31 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
             });
+            var data = $.parseJSON($.ajax({
+                url:  '/restaurant/getSearchRestaurants',
+                dataType: "json", 
+                async: false
+            }).responseText);
+            $(".ac-project").autocomplete({
+                minLength: 0,
+                source: data,
+                focus: function(event, ui) {
+                    $('[name="searchId"]')[0].value=ui.item.id;
+                    $(".ac-project").val(ui.item.name);
+                    return false;
+                },
+                select: function(event, ui) {
+                    $('[name="searchId"]')[0].value=ui.item.id;
+                    $(".ac-project").val(ui.item.name);
+                    $('#form_search').submit();
+                    return false;
+                }
+            })
+            .autocomplete("instance")._renderItem = function(ul, item) {
+                return $("<li>")
+                    .append("<div>" + item.name +"</div>")
+                    .appendTo(ul);
+            };
     </script>
 </body>
 </html>

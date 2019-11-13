@@ -14,6 +14,12 @@
                 <ul class="nav navbar-nav mr-auto float-left">
                     <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
                     <li id="expand" class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
+                    <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a><div class="search-input">
+                            {{ Form::open(['action' => 'RestaurantsController@index','methode' => 'POST','id'=>'form_search']) }}
+                            {{Form::text('searchName', '',['class'=>'input ac-project' ,'placeholder'=>'Nom de restaurant'])}}                                                                
+                            {{ Form::hidden('searchId', '') }}
+                            {{ Form::close() }}
+                        </div></li>
                 </ul>
                 <ul class="nav navbar-nav float-right">
                     <li class="dropdown dropdown-language nav-item"><a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-gb"></i><span class="selected-language"></span></a>
@@ -103,7 +109,7 @@
                             <hr>
                             <a class="dropdown-item" href="{{ route('logout') }} "
                             onclick="event.preventDefault();
-                                              document.getElementById('logout-form').submit();">
+                                        document.getElementById('logout-form').submit();">
                                 <i class="ft-power"></i> Se déconnecter</a>
                             {{ Form::open(['id'=>'logout-form','action' => 'Auth\LoginController@logout','methode' => 'POST', 'style' => 'display: none;']) }}
                             {{ Form::close() }}

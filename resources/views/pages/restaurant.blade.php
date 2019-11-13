@@ -10,7 +10,7 @@
 @endcomponent
 @include('partials.messages')
 <link rel="stylesheet" type="text/css" href="{{mix('/app-assets/css/select2/select2.min.css')}}">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link rel="stylesheet" href="{{asset('/app-assets/css/bootstrap-timepicker.min.css')}}">
 <style type="text/css">
     .controls {
         background-color: #fff;
@@ -34,7 +34,7 @@ border-color: #4d90fe;
 }
 </style>
 <section id="horizontal-form-layouts">
-    <div id="infoDiv" style="display:none;" class="row">
+    <div id="infoDiv" style="{{$restaurant->id==null?'display:none;':''}}"  class="row">
         <div class="col-md-12">
             <div class="card main-card">
                 <div class="card-header">
@@ -62,7 +62,7 @@ border-color: #4d90fe;
                                                 <p class="text-left"><h6 class="text-muted">Nom</h6></p>
                                                 <div class="input-group">
                                                     {{ Form::hidden('id', '') }}
-                                                    {{Form::text('name', '',['class'=>'form-control' ,'placeholder'=>'Nom','autofocus'])}}                                                                
+                                                    {{Form::text('name', $restaurant->name,['class'=>'form-control' ,'placeholder'=>'Nom','autofocus'])}}                                                                
                                                     <div class="input-group-append">
                                                         <span class="input-group-text" id="basic-addon4"><i class="la la-edit"></i></span>
                                                     </div>
@@ -77,7 +77,7 @@ border-color: #4d90fe;
                                                 <fieldset>
                                                     <p class="text-left"><h6 class="text-muted">Email de Résérvation</h6></p>
                                                     <div class="input-group">
-                                                        {{Form::email('bookingEmail', '',['class'=>'form-control' ,'placeholder'=>'Email de Résérvation','autofocus'])}}                                                                
+                                                        {{Form::email('bookingEmail', $restaurant->bookingEmail,['class'=>'form-control' ,'placeholder'=>'Email de Résérvation','autofocus'])}}                                                                
                                                         <div class="input-group-append">
                                                             <span class="input-group-text" id="basic-addon4"><i class="la la-edit"></i></span>
                                                         </div>
@@ -112,7 +112,7 @@ border-color: #4d90fe;
                                                 <p class="text-left"><h6 class="text-muted">Numéro de téléphone</h6></p>
                                                 <div class="row"style="display:flex;align-items:center;">
                                                     <div class="col-md-12">
-                                                        {{Form::text('phone', '',['class'=>'form-control' ,'placeholder'=>'Numéro de téléphone','autofocus'])}}
+                                                        {{Form::text('phone', $restaurant->phone,['class'=>'form-control' ,'placeholder'=>'Numéro de téléphone','autofocus'])}}
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -141,38 +141,38 @@ border-color: #4d90fe;
   <tbody>
     <tr>
       <td>Lundi</td>
-      <td>{{Form::text('periods[0][0]', '',['class'=>'form-control timepicker'])}}</td>
-      <td>{{Form::text('periods[0][1]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[0][0]', $restaurant->periods[0][0],['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[0][1]', $restaurant->periods[0][1],['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Mardi</td>
-      <td>{{Form::text('periods[1][0]', '',['class'=>'form-control timepicker'])}}</td>
-      <td>{{Form::text('periods[1][1]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[1][0]', $restaurant->periods[1][0],['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[1][1]', $restaurant->periods[1][1],['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Mercredi</td>
-      <td>{{Form::text('periods[2][0]', '',['class'=>'form-control timepicker'])}}</td>
-      <td>{{Form::text('periods[2][1]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[2][0]', $restaurant->periods[2][0],['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[2][1]', $restaurant->periods[2][1],['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Jeudi</td>
-      <td>{{Form::text('periods[3][0]', '',['class'=>'form-control timepicker'])}}</td>
-      <td>{{Form::text('periods[3][1]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[3][0]', $restaurant->periods[3][0],['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[3][1]', $restaurant->periods[3][1],['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Vendredi</td>
-      <td>{{Form::text('periods[4][0]', '',['class'=>'form-control timepicker'])}}</td>
-      <td>{{Form::text('periods[4][1]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[4][0]', $restaurant->periods[4][0],['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[4][1]', $restaurant->periods[4][1],['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Samedi</td>
-      <td>{{Form::text('periods[5][0]', '',['class'=>'form-control timepicker'])}}</td>
-      <td>{{Form::text('periods[5][1]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[5][0]', $restaurant->periods[5][0],['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[5][1]', $restaurant->periods[5][1],['class'=>'form-control timepicker'])}}</td>
     </tr>
     <tr>
       <td>Dimanche</td>
-      <td>{{Form::text('periods[6][0]', '',['class'=>'form-control timepicker'])}}</td>
-      <td>{{Form::text('periods[6][1]', '',['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[6][0]', $restaurant->periods[6][0],['class'=>'form-control timepicker'])}}</td>
+      <td>{{Form::text('periods[6][1]', $restaurant->periods[6][1],['class'=>'form-control timepicker'])}}</td>
     </tr>
   </tbody>
 </table>
@@ -196,18 +196,18 @@ border-color: #4d90fe;
                         <div class="col-md-12">
 
                             <div class="accordion" id="accordionRestoMenu">
-                                
+@for ($i = 0; $i < sizeof($restaurant->menus); $i++)
 <div class="card" style="margin-bottom: 15px;">
     <div class="card-header" id="heading0" style="padding: 0px !important;">
       <h2 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse0" aria-expanded="true" aria-controls="collapse0">
-            Menu #1 
+      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{$i}}" aria-expanded="true" aria-controls="collapse0">
+            {{$restaurant->menus[$i]->title}} 
         </button>
         <button onclick="delete_m_menu(this)" class="btn btn-danger btn-sm"><i class="la la-trash"></i></button>
       </h2>
     </div>
 
-    <div id="collapse0" class="collapse" aria-labelledby="heading0" data-parent="#accordionRestoMenu">
+    <div id="collapse{{$i}}" class="collapse" aria-labelledby="heading{{$i}}" data-parent="#accordionRestoMenu">
       <div class="card-body">
         <input type="text" name="m_menu[]" placeholder="Titre de menu" class="form-control menu-title" /><br />
         <table class="table table-condensed table-hover">
@@ -218,12 +218,14 @@ border-color: #4d90fe;
                 </tr>
             </thead>
             <tbody id="rest_menu">
+                @for ($j = 0; $j < sizeof($restaurant->menus[$i]->menuItems); $j++)
                 <tr class="row">
-                    <td class="col-md-10"><input type="text" class="form-control" name="m_item[0][]" /></td>
+                    <td class="col-md-10"><input value="{{$restaurant->menus[$i]->menuItems[$j]->item}}" type="text" class="form-control" name="m_item[{{$i}}][]" /></td>
                     <td class="col-md-2">
-                    <input type="text" class="form-control" name="m_price[0][]" />
+                    <input type="text" value="{{$restaurant->menus[$i]->menuItems[$j]->price}}" class="form-control" name="m_price[{{$i}}][]" />
                     </td>
-                </tr>
+                </tr> 
+                @endfor
             </tbody>
             <tfoot>
                 <tr class="row">
@@ -236,6 +238,8 @@ border-color: #4d90fe;
       </div>
     </div>
 </div>
+@endfor                        
+
 
                             </div>
 
@@ -483,7 +487,7 @@ border-color: #4d90fe;
   </script>
       <script type="text/javascript" src='https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyAaKahIho8wMI6UUS1a3Y32Dhj9RDZRCCk&callback=initMap' async defer></script>
 <script src="{{mix('/app-assets/js/select2/select2.min.js')}}"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script src="{{asset('/app-assets/js/bootstrap-timepicker.min.js')}}"></script>
 <script>
     var url = "{{ url('/restaurant/getData') }}";
 
@@ -500,16 +504,19 @@ border-color: #4d90fe;
     }
 
     $(document).ready(function () {
+        if ({{$restaurant->id}}!=null) {
+            var pos = {
+          lat: {{$restaurant->latitude}},
+          lng: {{$restaurant->longitude}}
+            };
+            $("#loc-lon").val({{$restaurant->longitude}});
+            $("#loc-lat").val({{$restaurant->latitude}});
+            map.setCenter(pos);
+            marker.setPosition(pos);
+        }
+        
+
         $('.timepicker').timepicker({
-    timeFormat: 'h:mm p',
-    interval: 60,
-    minTime: '0',
-    maxTime: '6:00pm',
-    defaultTime: '0',
-    startTime: '08:00',
-    dynamic: false,
-    dropdown: true,
-    scrollbar: true
 });
 
         $(document).on('keyup', ".menu-title", function () {
