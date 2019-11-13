@@ -504,7 +504,7 @@ border-color: #4d90fe;
     }
 
     $(document).ready(function () {
-        if ({{$restaurant->id!=null}}) {
+        if ({{$restaurant->id!=null?'true':'false'}}) {
             var pos = {
           lat: {{$restaurant->latitude==null?0:$restaurant->latitude}},
           lng: {{$restaurant->longitude==null?0:$restaurant->longitude}}
