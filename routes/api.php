@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,14 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::post('categories', function(Request $request){
+	return Category::whereIsRoot()->orderBy('updated_at','desc')->get();   
+});
+
+Route::get('restaurants/{cat_id}', function(Request $request, $cat_id){
+	$cat = Category::find($cat_id);
+	return $cat->restaurants;
 });
