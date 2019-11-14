@@ -18,9 +18,7 @@
     <!-- Styles -->
     <link href="{{mix('/app-assets/css/app.css')}}" rel="stylesheet">  
     <style>
-        .main-card{
-            margin: 0 1em;
-        }
+        
         .search-input.open .input{
             width: 180px !important;
         }
@@ -36,7 +34,7 @@
     @include('partials.header')
     <!-- END: Header-->
     <div class="app-content content">
-        <div class="content-wrapper">
+        <div style="padding-top: 0" class="content-wrapper">
             <div class="content-header row mb-1">
             </div>
             <div style="padding-bottom: 3rem!important;" class="content-body">

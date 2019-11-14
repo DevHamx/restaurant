@@ -55,7 +55,7 @@ border-color: #4d90fe;
                 {{ Form::open(['action' => 'RestaurantsController@restaurantOperations','methode' => 'POST','id'=>'form_restaurants']) }}
                         <div class="form form-horizontal row-separator">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-group row mx-auto last">
                                         <div class="col-md-12">
                                             <fieldset>
@@ -86,7 +86,26 @@ border-color: #4d90fe;
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
+                                    
+                                            <div class="form-group row mx-auto">
+                                                <div class="col-md-12">
+                                                    <fieldset>
+                                                        <p class="text-left"><h6 class="text-muted">Numéro de téléphone</h6></p>
+                                                        <div class="input-group">
+                                                            {{Form::text('phone', $restaurant->phone,['class'=>'form-control' ,'placeholder'=>'Numéro de téléphone','autofocus'])}}
+                                                            <div class="input-group-append">
+                                                                    <span class="input-group-text" id="basic-addon4"><i class="la la-edit"></i></span>
+                                                                </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+        
+                                        </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-12">
                                             <div class="form-group row mx-auto">
                                                     <div class="col-md-12">
     
@@ -102,25 +121,6 @@ border-color: #4d90fe;
                                         </div>
                                             </div>
                                         </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    
-                                    <div class="form-group row mx-auto">
-                                        <div class="col-md-12">
-                                            <fieldset>
-                                                <p class="text-left"><h6 class="text-muted">Numéro de téléphone</h6></p>
-                                                <div class="row"style="display:flex;align-items:center;">
-                                                    <div class="col-md-12">
-                                                        {{Form::text('phone', $restaurant->phone,['class'=>'form-control' ,'placeholder'=>'Numéro de téléphone','autofocus'])}}
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-
-                                </div>
-
                                 <div class="col-md-12">
                                     <div class="form-group row mx-auto">
                                         <div class="col-md-12">
@@ -258,24 +258,6 @@ border-color: #4d90fe;
 </div>
 
                             </div>
-                            <div style="display: block"  class="row">
-                                <div style="margin-left:auto;margin-right:auto;" class="col-md-8">
-                                        <p class="text-left"><h6 class="text-muted">Adresse</h6></p>
-                                        <div class="form-group row mx-auto">
-
-                                                <!--<input id="pac-input" class="controls" type="text"
-                                                placeholder="Entrez le nom de restaurant">-->
-                                                <div style="height: 30em " id="map" class="form-control"></div>
-                                                <input type="hidden" id="place-name" name="place-name" />
-                                                <input type="hidden" id="place-id" name="place-id" />
-                                                <input type="hidden" id="loc-lat" name="latitude" />
-                                                <input type="hidden" id="loc-lon" name="longitude" />
-
-                                                
-                                        </div>
-                                </div>
-                                
-                            </div>
                                 <table class="submit-table">
                                     <tbody>
                                         <tr>
@@ -338,6 +320,31 @@ border-color: #4d90fe;
         </div>
     </div>
 </section>
+<div class="modal animated rollIn text-left" id="mapModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel41" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel41">Adresse</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div style="display: block"  class="row">
+                        <div class="form-group row mx-auto">
+                            <!--<input id="pac-input" class="controls" type="text"
+                            placeholder="Entrez le nom de restaurant">-->
+                            <div style="height: 30em " id="map" class="form-control"></div>
+                            <input type="hidden" id="place-name" name="place-name" />
+                            <input type="hidden" id="place-id" name="place-id" />
+                            <input type="hidden" id="loc-lat" name="latitude" />
+                            <input type="hidden" id="loc-lon" name="longitude" />
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @push('scripts')
 <script>
     var map;
