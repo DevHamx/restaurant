@@ -12,7 +12,7 @@
         "barryvdh/laravel-snappy": "^0.4.4",
         "fideloper/proxy": "^4.0",
         "kalnoy/nestedset": "^5.0",
-        "laravel/framework": "6.3.0",
+        "laravel/framework": "6.18.43",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^6.0.3",
         "yajra/laravel-datatables-oracle": "~9.0",
